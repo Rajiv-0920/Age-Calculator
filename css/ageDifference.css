@@ -108,7 +108,7 @@
 }
 html {
   line-height: 1.5;
-  font-size: 45.5%;
+  font-size: 55.5%;
 }
 body {
   min-height: 100vh;
@@ -268,7 +268,7 @@ p.main-header-title {
   margin-top: 20px;
   display: flex;
   grid-column: 1/4;
-  gap: 100px;
+  gap: 20px;
   justify-self: center;
   justify-content: space-between;
 }

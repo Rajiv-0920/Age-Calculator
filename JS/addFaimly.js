@@ -41,7 +41,6 @@ memberImgInput.addEventListener("change", () => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-  allMember();
   optionsEl.forEach((option) =>
     option.addEventListener("click", () => {
       optionsEl.forEach((value) => value.removeAttribute("checked"));
@@ -57,9 +56,8 @@ addMember.addEventListener("click", () => {
   containerEl.classList.toggle("show");
 });
 
-saveBtn.addEventListener("click", (e) => {
+saveBtn.addEventListener("click", () => {
   memberInformation();
-  e.preventDefault();
   if (memberBirth) {
     updatedData();
     const persons = {
@@ -105,24 +103,26 @@ cancelBtn.addEventListener("click", (event) => {
 
 function updatedData() {
   const tempInfo = JSON.parse(localStorage.getItem("personInfo"));
-  const details = JSON.parse(localStorage.getItem("details"));
-  let updateDetails = details[tempInfo.itemNo];
-  const infoUpdated = details.filter((person, index) => {
-    if (index === tempInfo.itemNo) {
-      updateDetails.name = tempInfo.name;
-      updateDetails.img = tempInfo.img;
-      updateDetails.category = tempInfo.category;
-      updateDetails.memberBirthDate = [tempInfo.y, tempInfo.m, tempInfo.d];
-      updateDetails.nextBirthMonth = nextYearBirthDate(
-        updateDetails.memberBirthDate
-      )[0];
-      updateDetails.nextBirthday = nextYearBirthDate(
-        updateDetails.memberBirthDate
-      )[1];
-    }
-    return person;
-  });
-  localStorage.setItem("details", JSON.stringify(infoUpdated));
+  if (tempInfo) {
+    const details = JSON.parse(localStorage.getItem("details"));
+    let updateDetails = details[tempInfo.itemNo];
+    const infoUpdated = details.filter((person, index) => {
+      if (index === tempInfo.itemNo) {
+        updateDetails.name = tempInfo.name;
+        updateDetails.img = tempInfo.img;
+        updateDetails.category = tempInfo.category;
+        updateDetails.memberBirthDate = [tempInfo.y, tempInfo.m, tempInfo.d];
+        updateDetails.nextBirthMonth = nextYearBirthDate(
+          updateDetails.memberBirthDate
+        )[0];
+        updateDetails.nextBirthday = nextYearBirthDate(
+          updateDetails.memberBirthDate
+        )[1];
+      }
+      return person;
+    });
+    localStorage.setItem("details", JSON.stringify(infoUpdated));
+  }
 }
 
 function memberInformation() {
@@ -318,8 +318,8 @@ function getLocalStorage() {
   }
 }
 
-function allMember() {
-  const allItems = document.querySelectorAll(".item");
+const allItems = document.querySelectorAll(".item");
+if (allItems) {
   allItems.forEach((item, index) => {
     item.addEventListener("click", () => {
       const info = JSON.parse(localStorage.getItem("personInfo"));

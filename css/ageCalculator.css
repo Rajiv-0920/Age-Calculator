@@ -108,7 +108,7 @@
 }
 html {
   line-height: 1.5;
-  font-size: 45.5%;
+  font-size: 55.5%;
 }
 body {
   min-height: 100vh;
@@ -118,7 +118,6 @@ body {
   font-family: "Lato", sans-serif;
   align-items: center;
   font-size: 1.5rem;
-  overflow-x: hidden;
 }
 
 .container {
@@ -128,6 +127,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
+  overflow: hidden;
 }
 .currentDate,
 .dateBirth {
@@ -309,7 +310,9 @@ p.main-header-title {
   opacity: 0;
   visibility: hidden;
   transition: 0.3s;
-  width: max-content;
+  text-align: center;
+  width: 300px;
+  overflow: hidden;
 }
 .message.show {
   position: absolute;

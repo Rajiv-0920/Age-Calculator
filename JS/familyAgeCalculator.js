@@ -106,6 +106,7 @@ deleteBtn.addEventListener("click", () => {
   const newdetails = details.filter((member, index) => {
     return index !== person.itemNo ? true : false;
   });
+  localStorage.setItem("personInfo", JSON.stringify(""));
   localStorage.setItem("details", JSON.stringify(newdetails));
   location.href = "http://127.0.0.1:3000/addFamily.html";
 });
@@ -363,9 +364,7 @@ function updateData(e) {
   title.textContent =
     checkedOptions === "anniversary" ? "Anniversary" : "Date of Birth";
 
-  console.log(updateCurrentInfo.name);
   localStorage.setItem("personInfo", JSON.stringify(updateCurrentInfo));
-  console.log(updateCurrentInfo.name);
 
   // Updating Outer Container
 
@@ -390,7 +389,6 @@ function updateData(e) {
     }
     return person;
   });
-  console.log(infoUpdated);
   localStorage.setItem("details", JSON.stringify(infoUpdated));
 }
 function nextYearBirthDate(memberBirth) {
