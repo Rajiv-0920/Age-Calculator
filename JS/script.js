@@ -94,7 +94,7 @@ function clearAll() {
   leftDays.textContent = "00";
   const dte = new Date();
   let d = dte.getDate();
-  let m = dte.getMonth();
+  let m = dte.getMonth() + 1;
   let y = dte.getFullYear();
   m < 10 ? (m = `0${m}`) : m;
   d < 10 ? (d = `0${d}`) : d;

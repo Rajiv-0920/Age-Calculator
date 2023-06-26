@@ -130,14 +130,14 @@ body {
 /* Header Start */
 header {
   background-color: var(--header-bg);
-  padding: 20px;
+  padding: 15px;
   width: 100%;
   letter-spacing: 1px;
   color: var(--header-color);
   border-bottom: 2px solid var(--border);
 }
 p.main-header-title {
-  font-size: 2.6rem;
+  font-size: 2.3rem;
   font-weight: 700;
   margin-left: 15px;
 }
