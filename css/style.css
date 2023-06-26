@@ -108,7 +108,7 @@
 }
 html {
   line-height: 1.5;
-  font-size: 62.5%;
+  font-size: 45.5%;
 }
 body {
   min-height: 100vh;
@@ -177,18 +177,18 @@ img {
 }
 
 img.img {
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   object-position: center;
 }
 .list .list-item > section a {
   display: flex;
-  gap: 30px;
-  font-size: 1.2rem;
+  gap: 20px;
+  font-size: 1.1rem;
   align-items: center;
   background-color: var(--bg-color);
-  padding: 15px 30px;
+  padding: 15px 15px;
   border-radius: 5px;
   color: var(--meta-title-color);
   text-decoration: none;
@@ -228,5 +228,13 @@ p.theme-title {
   .container,
   header {
     width: 500px;
+  }
+  img.img {
+    width: 70px;
+    height: 70px;
+  }
+  .list .list-item > section a {
+    gap: 30px;
+    padding: 15px 30px;
   }
 }

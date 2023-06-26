@@ -108,7 +108,7 @@
 }
 html {
   line-height: 1.5;
-  font-size: 62.5%;
+  font-size: 45.5%;
 }
 body {
   min-height: 100vh;
@@ -273,8 +273,8 @@ p.main-header-title {
   justify-content: space-between;
 }
 img.img {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   box-shadow: 0 0 10px var(--box-shadow);
   border-radius: 50%;
   border: 2px solid var(--border);
@@ -305,5 +305,9 @@ img.img {
   .container,
   header {
     width: 500px;
+  }
+  img.img {
+    width: 100px;
+    height: 100px;
   }
 }

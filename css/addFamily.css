@@ -108,7 +108,7 @@
   box-sizing: border-box;
 }
 html {
-  font-size: 62.5%;
+  font-size: 45.5%;
   line-height: 1.5;
 }
 body {
@@ -179,8 +179,8 @@ img {
   display: block;
 }
 .user-img {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   object-position: center;
   border-radius: 50%;
@@ -468,5 +468,9 @@ label {
   }
   .member-details.show {
     width: 500px;
+  }
+  .user-img {
+    width: 80px;
+    height: 80px;
   }
 }

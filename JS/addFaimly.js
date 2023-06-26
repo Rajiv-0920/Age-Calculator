@@ -57,10 +57,11 @@ addMember.addEventListener("click", () => {
   containerEl.classList.toggle("show");
 });
 
-saveBtn.addEventListener("click", () => {
+saveBtn.addEventListener("click", (e) => {
   memberInformation();
-  updatedData();
+  e.preventDefault();
   if (memberBirth) {
+    updatedData();
     const persons = {
       img: imgValue,
       name: memberName.value,

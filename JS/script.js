@@ -70,8 +70,16 @@ currentDate.addEventListener("change", () => {
 birthDate.addEventListener("change", () => {
   getDateOfBirth();
 });
+function showError(text) {
+  const message = document.querySelector(".message");
+  message.classList.add("show");
+  message.innerHTML = `<p>${text} :)</p>`;
+  setTimeout(() => {
+    message.classList.remove("show");
+  }, 1500);
+}
 calculateBtn.addEventListener("click", () => {
-  birthDate.value === "" ? alert("Enter Date of Birth :)") : calculateAge();
+  birthDate.value === "" ? showError("Enter Date of Birth") : calculateAge();
 });
 clearBtn.addEventListener("click", () => {
   clearAll();
@@ -166,7 +174,7 @@ function calculateAge() {
 
   let y = cYear - bYear - carryYear;
   if (y < 0) {
-    alert("Birth date cannot be greater than today's date :)");
+    showError("Birth date cannot be greater than today's ");
     clearAll();
   } else {
     d < 10 ? (d = `0${d}`) : d;
