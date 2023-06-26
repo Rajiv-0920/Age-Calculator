@@ -1,0 +1,278 @@
+// *************************************
+// *********** Age Calculator **********
+// *************************************
+
+// for Current Day Element  Selector
+const currentDate = document.getElementById("currentDate");
+const currentDay = document.getElementById("currentDay");
+
+// for BirthDay Element Selector
+const birthDate = document.getElementById("birthDate");
+const birthDay = document.getElementById("birth-day");
+
+// for Buttons Element Selector
+const calculate = document.getElementById("calculate");
+const clearBtn = document.getElementById("clear");
+
+// for Show Calculate Age Element Selector
+const calculatedYear = document.getElementById("calculate-year");
+const calculatedMonth = document.getElementById("calculated-month");
+const calculatedDate = document.getElementById("calculated-date");
+
+// for Next Birthday Element Selector
+const monthsLeft = document.getElementById("month-left");
+const daysLeft = document.getElementById("days-left");
+
+// for Extras Details Element Selector
+const totalYears = document.getElementById("total-years");
+const totalMonths = document.getElementById("total-months");
+const totalWeeks = document.getElementById("total-weeks");
+const totalDays = document.getElementById("total-days");
+const totalHours = document.getElementById("total-hours");
+const totalMinutes = document.getElementById("total-minutes");
+const totalSeconds = document.getElementById("total-seconds");
+
+// for Upcoming Details Element Selector
+const extrasData = document.querySelector("#upcoming-Data");
+const dateOfBirth = document.querySelectorAll(".dateOfBirth");
+const nextYearBirthDay = document.querySelectorAll(".nextYearBirthDay");
+
+// All Week Days
+const weekDays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+// ------------------ EventListeners ----------------
+window.addEventListener("DOMContentLoaded", () => {
+  getCurrentDateDay();
+  getCurrentDateYear();
+});
+
+birthDate.addEventListener("change", () => {
+  getUserDateOfBirth();
+});
+currentDate.addEventListener("change", () => {
+  getCurrentDateDay();
+});
+
+calculate.addEventListener("click", () => {
+  calculateAge();
+});
+
+clearBtn.addEventListener("click", () => {
+  clearAll();
+});
+
+// ------------------ Functions ----------------
+// Get Current Date-Year-Month Function
+function getCurrentDateYear() {
+  const dte = dateStringToNum(getCurrentDateDay().split("-"));
+  let getCurrentDate = new Date().getDate();
+  let getCurrentMonth = new Date().getMonth() + 1;
+  const getCurrentYear = new Date().getFullYear();
+  console.log(getCurrentDateDay());
+  getCurrentMonth < 10
+    ? (getCurrentMonth = `0${getCurrentMonth}`)
+    : getCurrentMonth;
+  getCurrentDate < 10
+    ? (getCurrentDate = `0${getCurrentDate}`)
+    : getCurrentDate;
+
+  currentDate.value = `${getCurrentYear}-${getCurrentMonth}-${getCurrentDate}`;
+  return `${getCurrentYear}-${getCurrentMonth}-${getCurrentDate}`;
+}
+
+function getCurrentDateDay() {
+  const date = currentDate.value;
+  const currentDayNum = new Date(date).getDay();
+  currentDay.textContent = weekDays[currentDayNum];
+  return date;
+}
+
+function getUserDateOfBirth() {
+  const userBirth = birthDate.value;
+  const getUserBirthDay = new Date(userBirth).getDay();
+  birthDay.textContent = weekDays[getUserBirthDay];
+  return birthDate.value;
+}
+
+// Calculate Age function
+function calculateAge() {
+  let birthDate = dateStringToNum(getUserDateOfBirth().split("-"));
+
+  const dte = dateStringToNum(getCurrentDateDay().split("-"));
+
+  const currentYear = dte[0];
+  const currentMonth = dte[1];
+  const currentDate = dte[2];
+
+  const userBirthYear = dateStringToNum(birthDate)[0];
+  const userBirthMonth = dateStringToNum(birthDate)[1];
+  const userBirthDate = dateStringToNum(birthDate)[2];
+
+  let month = 0;
+  let date = 0;
+  let year = 0;
+  let carry = 0;
+  let carryMonths = 0;
+
+  if (currentDate < userBirthDate) {
+    carry = 1;
+    date =
+      currentDate +
+      getDaysInMonth(currentMonth - 1, currentYear) -
+      userBirthDate;
+  } else {
+    date = currentDate - userBirthDate;
+  }
+
+  if (currentDate === userBirthDate || currentMonth > userBirthMonth) {
+    month = currentMonth - userBirthMonth - carry;
+  } else if (
+    currentDate < userBirthDate ||
+    (currentDate > userBirthDate && currentMonth <= userBirthMonth)
+  ) {
+    if (!(currentDate > userBirthDate && currentMonth === userBirthMonth)) {
+      carryMonths = 12;
+    }
+    month = currentMonth + carryMonths - userBirthMonth - carry;
+  }
+
+  if (carryMonths === 12) {
+    year = currentYear - userBirthYear - 1;
+  } else {
+    year = currentYear - userBirthYear;
+  }
+
+  if (userBirthDate === undefined || userBirthMonth === undefined) {
+    birthDay.textContent = `Invalid Input!`;
+    birthDay.classList.add("error");
+    year = "0";
+    month = "0";
+    date = "0";
+  } else {
+    birthDay.classList.remove("error");
+  }
+  // Calculation of Next Birthday
+  nextBirthday(date, month, currentMonth, currentYear);
+
+  year < 10 ? (year = `0${year}`) : year;
+  month < 10 ? (month = `0${month}`) : month;
+  date < 10 ? (date = `0${date}`) : date;
+
+  calculatedYear.textContent = year;
+  calculatedMonth.textContent = month;
+  calculatedDate.textContent = date;
+
+  totalYears.textContent = year;
+  // + sign use for for convert string to number like. +year or +month
+  let totalMonth = +year * 12 + +month;
+  totalMonths.textContent = totalMonth;
+  let totalWeek = (totalMonth + +date) * 4.345;
+  totalWeeks.textContent = Math.round(totalWeek);
+  let totalDay = Math.round(totalMonth * 30.417);
+  totalDays.textContent = totalDay;
+  totalHours.textContent = totalDay * 24;
+  totalMinutes.textContent = totalDay * 24 * 60;
+  totalSeconds.textContent = totalDay * 24 * 60 * 60;
+  // resetBirthDate();
+  extrasData.classList.remove("hide");
+  upcomingDates(userBirthDate, userBirthMonth, currentYear);
+}
+
+// conver String Array to Number of Array
+function dateStringToNum(birthDate) {
+  birthDate = birthDate.map((value) => {
+    return +value;
+  });
+  return birthDate;
+}
+
+function clearAll() {
+  calculatedYear.textContent = "00";
+  calculatedMonth.textContent = "00";
+  calculatedDate.textContent = "00";
+  monthsLeft.textContent = "00";
+  daysLeft.textContent = "00";
+  const dte = new Date();
+  let d = dte.getDate();
+  let m = dte.getMonth();
+  let y = dte.getFullYear();
+  m < 10 ? (m = `0${m}`) : m;
+  d < 10 ? (d = `0${d}`) : d;
+  currentDate.value = `${y}-${m}-${d}`;
+  resetBirthDate();
+}
+
+function resetBirthDate() {
+  birthDate.value = "";
+}
+
+var getDaysInMonth = function (month, year) {
+  // Here January is 1 based
+  //Day 0 is the last day in the previous month
+  return new Date(year, month, 0).getDate();
+  // Here January is 0 based
+  // return new Date(year, month+1, 0).getDate();
+};
+
+function nextBirthday(date, month, currentMonth, currentYear) {
+  let leftMonth;
+  let leftDay;
+  let borrow;
+  if (date > 0) {
+    borrow = 1;
+    leftDay = getDaysInMonth(currentMonth - 1, currentYear) - +date;
+  } else {
+    borrow = 0;
+    leftDay = `00`;
+    leftMonth = `00`;
+  }
+  console.log(date, month, currentMonth, currentYear);
+  if (borrow === 1) {
+    leftMonth = 12 - +month - borrow;
+  } else if (month !== 0) {
+    leftMonth = 12 - +month - borrow;
+  } else {
+    leftMonth = `00`;
+  }
+  if (leftMonth < 10 && leftMonth > 0) {
+    leftMonth = `0${leftMonth}`;
+  }
+  if (leftDay < 10 && leftDay > 0) {
+    leftDay = `0${leftDay}`;
+  }
+
+  console.log(leftMonth);
+  console.log(leftDay);
+  monthsLeft.textContent = leftMonth;
+  daysLeft.textContent = leftDay;
+}
+
+function upcomingDates(date, month, year) {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  dateOfBirth.forEach((value, index) => {
+    value.textContent = `${date} ${monthNames[month - 1]} ${++year}`;
+    nextYearBirthDay[index].textContent =
+      weekDays[new Date(value.innerText).getDay()];
+  });
+}

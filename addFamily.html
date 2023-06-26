@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/addFamily.css" />
+    <script src="./JS/addFaimly.js" defer></script>
+    <script src="./JS/theme.js" defer></script>
+    <title>Add Family & Friends</title>
+  </head>
+  <body class="">
+    <header>
+      <p class="main-header-title">Add Family & Friends</p>
+    </header>
+    <main class="container">
+      <div class="member-container">
+        <div class="no-persons">
+          <p class="hi">No records are present here</p>
+          <p class="des">Add your family and friends</p>
+        </div>
+        <div class="all-members">
+          <!-- <a href="person-details.html" class="member">
+            <img src="./images/women.avif" alt="" class="user-img" />
+            <div>
+              <p class="member-name">Dev Kumar Patwa</p>
+              <p class="birthday">Birthday: 8/5/2000</p>
+              <p class="nextBirthday">Next Birthday: 10 Months 17 Days</p>
+            </div>
+            <i class="fa-solid fa-angle-right enter-icon"></i>
+          </a> -->
+        </div>
+        <button class="add-member"><i class="fa-solid fa-plus"></i></button>
+      </div>
+    </main>
+    <form class="member-details">
+      <div class="camera-container">
+        <input type="file" name="memberImg" id="memberImg" hidden />
+        <button id="chooseFile"></button>
+        <img src="./images/camera.png" class="img" alt="camera" />
+        <img id="img" alt="camera" accept="image/*" />
+      </div>
+      <div class="member-date">
+        <div>
+          <label for="date">Date</label>
+          <p class="message">invalid data!</p>
+        </div>
+        <input type="date" name="date" id="dateOfBirth" />
+      </div>
+      <div class="person-name">
+        <div>
+          <label for="name">name</label>
+          <p class="message">Enter Name!</p>
+        </div>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          maxlength="20"
+          placeholder="ex: Jhon Doe"
+          autocomplete="off"
+        />
+      </div>
+      <div class="birth-options">
+        <div>
+          <label>Category</label>
+          <p class="message">Select Category!</p>
+        </div>
+        <div>
+          <p>
+            <input
+              type="radio"
+              id="anniversary"
+              class="options"
+              name="radio-group"
+              data-event="anniversary"
+            />
+            <label for="anniversary">Anniversary</label>
+          </p>
+          <p>
+            <input
+              type="radio"
+              id="birthday"
+              class="options"
+              name="radio-group"
+              data-event="birthday"
+            />
+            <label for="birthday">Birthday</label>
+          </p>
+        </div>
+      </div>
+      <section class="btn-container">
+        <button class="btn cancel" id="cancel">Cancel</button>
+        <button class="btn save" id="save">Save</button>
+      </section>
+    </form>
+  </body>
+</html>

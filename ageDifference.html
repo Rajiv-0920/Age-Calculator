@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/ageDifference.css" />
+    <script src="JS/ageDifference.js" defer></script>
+    <script src="JS/theme.js" defer></script>
+    <title>Age Difference</title>
+  </head>
+  <body>
+    <header>
+      <p class="main-header-title">Age Difference</p>
+    </header>
+    <main class="container">
+      <div>
+        <div class="day">
+          <label for="firstPersonAge" class="title"
+            >First Person Name & Date of Birth</label
+          >
+          <p id="fDay"></p>
+        </div>
+        <div class="first-person-details">
+          <input
+            type="text"
+            name="name"
+            id="firstPersonName"
+            placeholder="Enter Name"
+            autocomplete="off"
+            maxlength="20"
+          />
+          <input type="date" name="firstPersonAge" id="firstPersonAge" />
+        </div>
+      </div>
+      <div>
+        <div class="day">
+          <label for="secondPersonAge" class="title"
+            >Second Person Name & Date of Birth</label
+          >
+          <p id="sDay"></p>
+        </div>
+        <div class="first-person-details">
+          <input
+            type="text"
+            name="name"
+            id="secondPersonName"
+            placeholder="Enter Name"
+            autocomplete="off"
+            maxlength="20"
+          />
+          <input type="date" name="secondPersonAge" id="secondPersonAge" />
+        </div>
+      </div>
+      <section class="btn-container">
+        <button class="btn clear" id="clear">Clear</button>
+        <button class="btn calculate" id="calculate">Calculate</button>
+      </section>
+      <section class="calculated-age-difference">
+        <p class="title">Age Difference</p>
+        <section class="age-difference">
+          <div>
+            <p class="years">years</p>
+            <p class="year calculated-year" id="years">00</p>
+          </div>
+          <div>
+            <p class="months">months</p>
+            <p class="month calculated-month" id="months">00</p>
+          </div>
+          <div>
+            <p class="days">days</p>
+            <p class="calculated-day" id="days">00</p>
+          </div>
+          <div class="user-birth-diff">
+            <div class="first-member">
+              <div>
+                <img src="./images/boy.png" class="img" alt="" />
+              </div>
+              <p class="diff-years"><span id="fCalcYear">00</span> years</p>
+              <div class="diff-mon-days">
+                <p class="diff-months">
+                  <span id="fCalcMonth">00</span> Months
+                </p>
+                <p class="diff-days"><span id="fCalcDate">00</span> days</p>
+              </div>
+            </div>
+            <div class="second-member">
+              <div>
+                <img src="./images/women.avif" class="img" alt="" />
+                <p class="diff-years"><span id="sCalcYear">00</span> years</p>
+                <div class="diff-mon-days">
+                  <p class="diff-months">
+                    <span id="sCalcMonth">00</span> Months
+                  </p>
+                  <p class="diff-days"><span id="sCalcDate">00</span> days</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="biggerDisc">
+            <span id="bigger">Hello </span>Bigger Than
+            <span id="smaller">World</span>
+          </p>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

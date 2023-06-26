@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="./JS/script.js" defer></script>
+    <script src="./JS/theme.js" defer></script>
+    <link rel="stylesheet" href="./css/ageCalculator.css" />
+    <title>Age Calculator</title>
+  </head>
+  <body>
+    <header>
+      <p class="main-header-title">Age Calculator</p>
+    </header>
+    <main class="container">
+      <div class="current-date-details">
+        <label for="currentDate" class="currentDate">
+          <p>Today's Date</p>
+          <p class="day" id="currentDay">Monday</p>
+        </label>
+        <div class="date-container">
+          <input type="date" name="currentDate" id="currentDate" />
+        </div>
+      </div>
+      <div class="birth-date-details">
+        <label for="dateBirth" class="dateBirth">
+          <p>Date of Birth</p>
+          <p class="day" id="birth-day"></p>
+        </label>
+        <div class="date-container">
+          <input type="date" name="birthDate" id="birthDate" />
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="btn clear" id="clear">Clear</button>
+        <button class="btn calculate" id="calculate">Calculate</button>
+      </div>
+      <div class="your-age">
+        <p class="your-age-title">Your Age</p>
+        <div>
+          <div>
+            <p class="years">years</p>
+            <p class="year calculated-year" id="calculate-year">00</p>
+          </div>
+          <div>
+            <p class="months">months</p>
+            <p class="month calculated-month" id="calculated-month">00</p>
+          </div>
+          <div>
+            <p class="days">days</p>
+            <p class="day calculated-day" id="calculated-date">00</p>
+          </div>
+        </div>
+      </div>
+      <div class="next-birthday">
+        <section class="title">
+          <p class="next-birthday-title">Next Birthday</p>
+          <p class="next-birth-day day" id="next-birthday"></p>
+        </section>
+        <div>
+          <div>
+            <p class="months">Months</p>
+            <p class="left-months" id="month-left">00</p>
+          </div>
+          <div>
+            <p class="days">days</p>
+            <p class="left-days" id="days-left">00</p>
+          </div>
+        </div>
+      </div>
+      <div class="extras">
+        <p class="extras-title">Extras</p>
+        <div class="extra-details">
+          <div>
+            <p>Total Years:</p>
+            <span id="total-years">0</span>
+          </div>
+          <div>
+            <p>Total Months:</p>
+            <span id="total-months">0</span>
+          </div>
+          <div>
+            <p>Total Weeks:</p>
+            <span id="total-weeks">0</span>
+          </div>
+          <div>
+            <p>Total Days:</p>
+            <span id="total-days">0</span>
+          </div>
+          <div>
+            <p>Total Hours:</p>
+            <span id="total-hours">0</span>
+          </div>
+          <div>
+            <p>Total Minutes:</p>
+            <span id="total-minutes">0</span>
+          </div>
+          <div>
+            <p>Total Seconds:</p>
+            <span id="total-seconds">0</span>
+          </div>
+        </div>
+      </div>
+      <div id="upcoming-Data" class="extras hide">
+        <p class="extras-title">Upcoming Birthday</p>
+        <div class="extra-details" id="upcoming-birthday">
+          <div>
+            <p class="dateOfBirth">8 may 2024</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth">8 may 2025</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth">8 may 2026</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth">8 may 2027</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth">8 may 2028</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth">8 may 2029</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth">8 may 2030</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth">8 may 2030</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth">8 may 2030</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth">8 may 2030</p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

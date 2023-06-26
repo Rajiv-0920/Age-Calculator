@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="./JS/familyAgeCalculator.js" defer></script>
+    <script src="./JS/theme.js" defer></script>
+    <link rel="stylesheet" href="./css/person-details.css" />
+    <title>Person Date of Birth</title>
+  </head>
+  <body>
+    <header>
+      <p class="main-header-title">Age Calculator</p>
+      <!-- <i class="fa-solid fa-share-nodes"></i>
+      <div class="social-share"></div> -->
+    </header>
+    <main class="container">
+      <section class="person-profile">
+        <div class="person-img">
+          <img src="" id="visiter-img" alt="img" />
+        </div>
+        <div class="name-others">
+          <p class="name" id="name"></p>
+          <i class="fa-solid fa-pen icon-rename" id="rename"></i>
+          <i class="fa-solid fa-trash icon-trash" id="delete"></i>
+        </div>
+      </section>
+      <section class="date-of-birth">
+        <p class="date" id="title"></p>
+        <div>
+          <p id="birthday"></p>
+        </div>
+      </section>
+      <section class="your-age">
+        <p class="your-age-title">Your Age</p>
+        <div>
+          <div>
+            <p class="years">years</p>
+            <p class="year calculated-year" id="year">00</p>
+          </div>
+          <div>
+            <p class="months">months</p>
+            <p class="month calculated-month" id="month">00</p>
+          </div>
+          <div>
+            <p class="days">days</p>
+            <p class="day calculated-day" id="days">00</p>
+          </div>
+        </div>
+      </section>
+      <div class="next-birthday">
+        <p class="next-birthday-title">Next <span class="category"></span></p>
+        <div>
+          <div>
+            <p class="months">Months</p>
+            <p class="left-months" id="left-months">00</p>
+          </div>
+          <div>
+            <p class="days">days</p>
+            <p class="left-days" id="left-days">00</p>
+          </div>
+        </div>
+      </div>
+      <div class="extras">
+        <p class="extras-title">Extras</p>
+        <div class="extra-details">
+          <div>
+            <p>Total Years:</p>
+            <span id="total-years">0</span>
+          </div>
+          <div>
+            <p>Total Months:</p>
+            <span id="total-months">0</span>
+          </div>
+          <div>
+            <p>Total Weeks:</p>
+            <span id="total-weeks">0</span>
+          </div>
+          <div>
+            <p>Total Days:</p>
+            <span id="total-days">0</span>
+          </div>
+          <div>
+            <p>Total Hours:</p>
+            <span id="total-hours">0</span>
+          </div>
+          <div>
+            <p>Total Minutes:</p>
+            <span id="total-minutes">0</span>
+          </div>
+          <div>
+            <p>Total Seconds:</p>
+            <span id="total-seconds">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="extras" id="upcoming-Data">
+        <p class="extras-title">Upcoming <span class="category"></span></p>
+        <div class="extra-details" id="upcoming-birthday">
+          <div>
+            <p class="dateOfBirth"></p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth"></p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth"></p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth"></p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth"></p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth"></p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+          <div>
+            <p class="dateOfBirth"></p>
+            <span class="nextYearBirthDay"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <form class="member-details">
+      <div class="camera-container">
+        <input type="file" name="memberImg" id="memberImg" hidden />
+        <button id="chooseFile"></button>
+        <img src="./images/camera.png" class="img" alt="camera" />
+        <img id="img" alt="camera" accept="image/*" />
+      </div>
+      <div class="member-date">
+        <div>
+          <label for="dateOfBirth">Date</label>
+          <p class="message">invalid data!</p>
+        </div>
+        <input type="date" name="date" id="dateOfBirth" />
+      </div>
+      <div class="person-name">
+        <div>
+          <label for="updateName">name</label>
+          <p class="message">Enter Name!</p>
+        </div>
+        <input
+          type="text"
+          name="name"
+          id="updateName"
+          maxlength="20"
+          placeholder="ex: Jhon Doe"
+          autocomplete="off"
+        />
+      </div>
+      <div class="birth-options">
+        <div>
+          <label>Category</label>
+          <p class="message">Select Category!</p>
+        </div>
+        <div>
+          <p>
+            <input
+              type="radio"
+              id="anniversary"
+              class="options"
+              name="radio-group"
+              data-event="anniversary"
+            />
+            <label for="anniversary">Anniversary</label>
+          </p>
+          <p>
+            <input
+              type="radio"
+              id="b"
+              class="options"
+              name="radio-group"
+              data-event="birthday"
+            />
+            <label for="b">Birthday</label>
+          </p>
+        </div>
+      </div>
+      <section class="btn-container">
+        <button class="btn cancel" id="cancel">Cancel</button>
+        <button class="btn save" id="update">Update</button>
+      </section>
+    </form>
+  </body>
+</html>
