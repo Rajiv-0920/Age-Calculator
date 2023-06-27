@@ -261,7 +261,10 @@ function rename() {
   updatedDateOfBirth.value = [tempInfo.y, tempInfo.m, tempInfo.d].join("-");
 
   memberName.value = tempInfo.name;
-
+  memberImg.src = tempInfo.img;
+  memberImg.classList.toggle("show");
+  cameraImgBtn.classList.toggle("hide");
+  console.log(tempInfo.img);
   optionsEl.forEach((option) => {
     if (tempInfo.category === option.dataset.event) {
       option.setAttribute("checked", true);
@@ -325,8 +328,6 @@ function updateData(e) {
     y: tempInfo.year,
   };
 
-  imgValue = imgValue === undefined ? "./images/man.png" : imgValue;
-  updateCurrentInfo.img = imgValue;
   let updatedDate = updatedDateOfBirth.value.split("-")[2];
   let updatedMonth = updatedDateOfBirth.value.split("-")[1];
   let updatedYear = updatedDateOfBirth.value.split("-")[0];

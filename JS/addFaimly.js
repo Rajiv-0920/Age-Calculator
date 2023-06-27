@@ -41,6 +41,7 @@ memberImgInput.addEventListener("change", () => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
+  pushNotification();
   optionsEl.forEach((option) =>
     option.addEventListener("click", () => {
       optionsEl.forEach((value) => value.removeAttribute("checked"));
@@ -59,6 +60,7 @@ addMember.addEventListener("click", () => {
 saveBtn.addEventListener("click", () => {
   memberInformation();
   if (memberBirth) {
+    pushNotification();
     updatedData();
     const persons = {
       img: imgValue,
@@ -175,7 +177,7 @@ function addMembers(name, option, memberBirth, img) {
   <a href="person-details.html" class="member">
   <img src="${img}" alt="img" class="user-img" />
   <div>
-  <p class="member-name">${name}</p>
+  <p class="member-name" data-name="${name}">${name}</p>
   <p class="birthday" data-category=${option} data-date=${
     memberBirth[2]
   } data-month=${memberBirth[1]} data-year=${memberBirth[0]}>${option}: ${
@@ -350,4 +352,68 @@ theme();
 function theme() {
   const selectedTheme = JSON.parse(localStorage.getItem("theme"));
   document.body.classList.add(selectedTheme);
+}
+
+function pushNotification() {
+  const birthdayMember = document.querySelector(".todays-brithday-members");
+  const details = JSON.parse(localStorage.getItem("details"));
+  let currentDate = new Date().getDate();
+  let currentMonth = new Date().getMonth() + 1;
+  for (var i in details) {
+    let birthDate = +details[i].memberBirthDate[2];
+    let birthMonth = +details[i].memberBirthDate[1];
+    let birthYear = +details[i].memberBirthDate[0];
+    let img = details[i].img;
+    let name = details[i].name;
+
+    if (birthDate === currentDate && birthMonth === currentMonth) {
+      const innerDiv = document.createElement("div");
+      if (img === undefined) {
+        img = `http://127.0.0.1:3000/images/man.png`;
+      }
+      innerDiv.innerHTML = `
+      <div class="todays-brithday">
+      <img src="${img}" alt="images of Person" />
+      <p class="name">${name}</p>
+      </div>
+      `;
+      birthdayMember.appendChild(innerDiv);
+      birthMonth < 10 ? (birthMonth = +`0${birthMonth}`) : birthMonth;
+      birthDate < 10 ? (birthDate = +`0${birthDate}`) : birthDate;
+
+      showNotification(name, img, birthDate, birthMonth, birthYear);
+    }
+  }
+  const birthdayPersons = document.querySelectorAll(".todays-brithday");
+  const personName = document.querySelectorAll(".name");
+  const members = document.querySelectorAll(".member-name");
+  const status = document.querySelector(".birthday-status");
+
+  if (birthdayPersons.length === 0) {
+    status.classList.add("hide");
+  } else {
+    status.classList.remove("hide");
+  }
+
+  birthdayPersons.forEach((person, index) => {
+    person.addEventListener("click", () => {
+      members.forEach((value) => {
+        if (value.innerText === personName[index].innerText) {
+          value.click();
+        }
+      });
+    });
+  });
+}
+function showNotification(name, img, bd, bm, by) {
+  Notification.requestPermission().then((perm) => {
+    if (perm === "granted") {
+      notification = new Notification(
+        `It's ${name.split(" ")[0]}'s Birthday Today`,
+        {
+          body: `Date of Birth: ${bd}-${bm}-${by}`,
+        }
+      );
+    }
+  });
 }
