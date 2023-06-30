@@ -264,7 +264,6 @@ function rename() {
   memberImg.src = tempInfo.img;
   memberImg.classList.toggle("show");
   cameraImgBtn.classList.toggle("hide");
-  console.log(tempInfo.img);
   optionsEl.forEach((option) => {
     if (tempInfo.category === option.dataset.event) {
       option.setAttribute("checked", true);
