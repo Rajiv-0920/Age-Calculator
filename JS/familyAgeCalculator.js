@@ -317,9 +317,10 @@ function getUserSelectedImg() {
 
 function updateData(e) {
   const tempInfo = JSON.parse(localStorage.getItem("personInfo"));
+  imgValue = imgValue !== undefined ? imgValue : tempInfo.img;
   const updateCurrentInfo = {
     name: tempInfo.name,
-    img: tempInfo.img,
+    img: imgValue,
     category: tempInfo.category,
     itemNo: tempInfo.itemNo,
     d: tempInfo.date,
