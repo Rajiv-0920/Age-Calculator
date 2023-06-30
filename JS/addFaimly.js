@@ -57,9 +57,9 @@ addMember.addEventListener("click", () => {
   containerEl.classList.toggle("show");
 });
 
-saveBtn.addEventListener("click", () => {
+saveBtn.addEventListener("click", (e) => {
   memberInformation();
-  if (memberBirth) {
+  if (memberBirth !== undefined) {
     pushNotification();
     updatedData();
     const persons = {
@@ -93,6 +93,8 @@ saveBtn.addEventListener("click", () => {
       details.push(persons);
       localStorage.setItem("details", JSON.stringify(details));
     }
+  } else {
+    e.preventDefault();
   }
 });
 
