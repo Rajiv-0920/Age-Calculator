@@ -495,6 +495,40 @@ body.show {
 label {
   color: var(--inner-title-color);
 }
+.error {
+  position: fixed;
+  background-color: var(--header-bg);
+  border-left: 5px solid rgb(249, 249, 249);
+  color: var(--header-color);
+  box-shadow: 0 0 10px #04000057;
+  top: 50%;
+  left: 120%;
+  transform: translate(-50%, -50%);
+  font-size: 2.2rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  text-align: center;
+  width: 300px;
+  overflow: hidden;
+}
+.error.show {
+  position: fixed;
+  background-color: var(--header-bg);
+  border-left: 5px solid rgb(249, 249, 249);
+  color: var(--header-color);
+  box-shadow: 0 0 10px #04000057;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.2rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  opacity: 1;
+  visibility: visible;
+}
 @media (min-width: 700px) {
   .container,
   header {

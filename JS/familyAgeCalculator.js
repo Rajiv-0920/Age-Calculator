@@ -108,24 +108,18 @@ deleteBtn.addEventListener("click", () => {
   });
   localStorage.setItem("personInfo", JSON.stringify(""));
   localStorage.setItem("details", JSON.stringify(newdetails));
-  location.href = "http://127.0.0.1:3000/addFamily.html";
+  history.back();
 });
-
 renameEl.addEventListener("click", () => {
   rename();
 });
-
 cancelBtn.addEventListener("click", (event) => {
   event.preventDefault();
   clearData();
 });
-
 update.addEventListener("click", (e) => {
-  memberDetails.classList.toggle("show");
-  containerEl.classList.toggle("show");
   updateData(e);
 });
-
 optionsEl.forEach((option) =>
   option.addEventListener("click", () => {
     optionsEl.forEach((value) => value.removeAttribute("checked"));
@@ -275,16 +269,16 @@ function clearData() {
   memberDetails.classList.toggle("show");
   containerEl.classList.toggle("show");
   setTimeout(() => {
+    memberImg.classList.toggle("show");
+    cameraImgBtn.classList.toggle("hide");
     dateOfBirth.value = "";
-    memberName.value = "";
-    optionsEl.forEach((option) => {
-      option.checked = false;
-    });
-    // from img reset
     memberImg.src = "";
-    memberImg.classList.remove("show");
-    cameraImgBtn.classList.remove("hide");
-  }, 1000);
+    memberName.value = "";
+    // optionsEl.forEach((option) => {
+    //   option.checked = false;
+    // });
+    // from img reset
+  }, 500);
 }
 
 imgBtn.addEventListener("click", () => {
@@ -327,70 +321,79 @@ function updateData(e) {
     m: tempInfo.month,
     y: tempInfo.year,
   };
+  const checkDateOfBirth = new Date(updatedDateOfBirth.value).getTime();
+  const checkCurrentDate = new Date().getTime();
 
-  let updatedDate = updatedDateOfBirth.value.split("-")[2];
-  let updatedMonth = updatedDateOfBirth.value.split("-")[1];
-  let updatedYear = updatedDateOfBirth.value.split("-")[0];
-  let prevName = tempInfo.name;
-  let prevDate = +tempInfo.d;
-  let prevMonth = +tempInfo.m;
-  let prevYear = +tempInfo.y;
+  if (checkCurrentDate < checkDateOfBirth) {
+    e.preventDefault();
+    showError("Birth date cannot be greater than today's ");
+  } else {
+    memberDetails.classList.toggle("show");
+    containerEl.classList.toggle("show");
+    let updatedDate = updatedDateOfBirth.value.split("-")[2];
+    let updatedMonth = updatedDateOfBirth.value.split("-")[1];
+    let updatedYear = updatedDateOfBirth.value.split("-")[0];
+    let prevName = tempInfo.name;
+    let prevDate = +tempInfo.d;
+    let prevMonth = +tempInfo.m;
+    let prevYear = +tempInfo.y;
 
-  updateCurrentInfo.name === ""
-    ? (updateCurrentInfo.name = prevName)
-    : (updateCurrentInfo.name = memberName.value);
+    updateCurrentInfo.name === ""
+      ? (updateCurrentInfo.name = prevName)
+      : (updateCurrentInfo.name = memberName.value);
 
-  let fullBirthDate =
-    new Date(updatedDateOfBirth.value).getDay() ||
-    new Date(`${prevYear}-${prevMonth}-${prevDate}`).getDay();
+    let fullBirthDate =
+      new Date(updatedDateOfBirth.value).getDay() ||
+      new Date(`${prevYear}-${prevMonth}-${prevDate}`).getDay();
 
-  updateCurrentInfo.d = +updatedDate || prevDate;
-  updateCurrentInfo.m = +updatedMonth || prevMonth;
-  updateCurrentInfo.y = +updatedYear || prevYear;
+    updateCurrentInfo.d = +updatedDate || prevDate;
+    updateCurrentInfo.m = +updatedMonth || prevMonth;
+    updateCurrentInfo.y = +updatedYear || prevYear;
 
-  showBirthday.textContent = `${weekDays[fullBirthDate]}, ${updatedDate} ${
-    month[updatedMonth - 1]
-  } ${updatedYear}`;
-  let checkedOptions;
-  optionsEl.forEach((option) => {
-    if (option.checked) {
-      checkedOptions = option.dataset.event;
-    }
-  });
+    showBirthday.textContent = `${weekDays[fullBirthDate]}, ${updatedDate} ${
+      month[updatedMonth - 1]
+    } ${updatedYear}`;
+    let checkedOptions;
+    optionsEl.forEach((option) => {
+      if (option.checked) {
+        checkedOptions = option.dataset.event;
+      }
+    });
 
-  updateCurrentInfo.category = checkedOptions;
-  category.forEach((cat) => {
-    cat.textContent = updateCurrentInfo.category;
-  });
-  title.textContent =
-    checkedOptions === "anniversary" ? "Anniversary" : "Date of Birth";
+    updateCurrentInfo.category = checkedOptions;
+    category.forEach((cat) => {
+      cat.textContent = updateCurrentInfo.category;
+    });
+    title.textContent =
+      checkedOptions === "anniversary" ? "Anniversary" : "Date of Birth";
 
-  localStorage.setItem("personInfo", JSON.stringify(updateCurrentInfo));
+    localStorage.setItem("personInfo", JSON.stringify(updateCurrentInfo));
 
-  // Updating Outer Container
+    // Updating Outer Container
 
-  const details = JSON.parse(localStorage.getItem("details"));
-  let updateDetails = details[updateCurrentInfo.itemNo];
-  const infoUpdated = details.filter((person, index) => {
-    if (index === updateCurrentInfo.itemNo) {
-      updateDetails.name = updateCurrentInfo.name;
-      updateDetails.img = updateCurrentInfo.img;
-      updateDetails.category = updateCurrentInfo.category;
-      updateDetails.memberBirthDate = [
-        updateCurrentInfo.y,
-        updateCurrentInfo.m,
-        updateCurrentInfo.d,
-      ];
-      updateDetails.nextBirthMonth = nextYearBirthDate(
-        updateDetails.memberBirthDate
-      )[0];
-      updateDetails.nextBirthday = nextYearBirthDate(
-        updateDetails.memberBirthDate
-      )[1];
-    }
-    return person;
-  });
-  localStorage.setItem("details", JSON.stringify(infoUpdated));
+    const details = JSON.parse(localStorage.getItem("details"));
+    let updateDetails = details[updateCurrentInfo.itemNo];
+    const infoUpdated = details.filter((person, index) => {
+      if (index === updateCurrentInfo.itemNo) {
+        updateDetails.name = updateCurrentInfo.name;
+        updateDetails.img = updateCurrentInfo.img;
+        updateDetails.category = updateCurrentInfo.category;
+        updateDetails.memberBirthDate = [
+          updateCurrentInfo.y,
+          updateCurrentInfo.m,
+          updateCurrentInfo.d,
+        ];
+        updateDetails.nextBirthMonth = nextYearBirthDate(
+          updateDetails.memberBirthDate
+        )[0];
+        updateDetails.nextBirthday = nextYearBirthDate(
+          updateDetails.memberBirthDate
+        )[1];
+      }
+      return person;
+    });
+    localStorage.setItem("details", JSON.stringify(infoUpdated));
+  }
 }
 function nextYearBirthDate(memberBirth) {
   const currentYear = new Date().getFullYear();
@@ -475,4 +478,12 @@ theme();
 function theme() {
   const selectedTheme = JSON.parse(localStorage.getItem("theme"));
   document.body.classList.add(selectedTheme);
+}
+function showError(text) {
+  const message = document.querySelector(".error");
+  message.classList.add("show");
+  message.innerHTML = `<p>${text} :)</p>`;
+  setTimeout(() => {
+    message.classList.remove("show");
+  }, 3000);
 }

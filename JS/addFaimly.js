@@ -135,18 +135,23 @@ function memberInformation() {
       optionChecked = option.dataset.event;
     }
   });
-  if (dateOfBirth.value === "") {
-    message[0].classList.add("error");
-    message[1].classList.remove("error");
-    message[2].classList.remove("error");
+  const checkDateOfBirth = new Date(dateOfBirth.value).getTime();
+  const checkCurrentDate = new Date().getTime();
+
+  if (checkCurrentDate < checkDateOfBirth) {
+    showError("Birth date cannot be greater than today's ");
+  } else if (dateOfBirth.value === "") {
+    message[0].classList.add("show");
+    message[1].classList.remove("show");
+    message[2].classList.remove("show");
   } else if (memberName.value === "") {
-    message[1].classList.add("error");
-    message[0].classList.remove("error");
-    message[2].classList.remove("error");
+    message[1].classList.add("show");
+    message[0].classList.remove("show");
+    message[2].classList.remove("show");
   } else if (optionChecked === undefined) {
-    message[2].classList.add("error");
-    message[0].classList.remove("error");
-    message[1].classList.remove("error");
+    message[2].classList.add("show");
+    message[0].classList.remove("show");
+    message[1].classList.remove("show");
   } else {
     memberBirth = dateOfBirth.value.split("-");
     addMembers(memberName.value, optionChecked, memberBirth, imgValue);
@@ -204,7 +209,6 @@ function addMembers(name, option, memberBirth, img) {
     noPerson.classList.remove("hide");
   }
 }
-
 function getUserSelectedImg() {
   if (memberImgInput.files && memberImgInput.files[0]) {
     var reader = new FileReader();
@@ -371,7 +375,7 @@ function pushNotification() {
     if (birthDate === currentDate && birthMonth === currentMonth) {
       const innerDiv = document.createElement("div");
       if (img === undefined) {
-        img = `http://127.0.0.1:3000/images/man.png`;
+        img = `./images/man.png`;
       }
       innerDiv.innerHTML = `
       <div class="todays-brithday">
@@ -418,4 +422,13 @@ function showNotification(name, img, bd, bm, by) {
       );
     }
   });
+}
+
+function showError(text) {
+  const message = document.querySelector(".error");
+  message.classList.add("show");
+  message.innerHTML = `<p>${text} :)</p>`;
+  setTimeout(() => {
+    message.classList.remove("show");
+  }, 3000);
 }
