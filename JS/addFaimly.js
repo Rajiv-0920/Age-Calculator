@@ -25,6 +25,8 @@ const cameraImgBtn = document.querySelector(".img");
 const memberImg = document.getElementById("img");
 const message = document.querySelectorAll(".message");
 
+const birthdayMember = document.querySelector(".todays-brithday-members");
+
 let optionChecked;
 
 let memberBirth;
@@ -58,9 +60,10 @@ addMember.addEventListener("click", () => {
 });
 
 saveBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   memberInformation();
+  totalMembers();
   if (memberBirth !== undefined) {
-    pushNotification();
     updatedData();
     const persons = {
       img: imgValue,
@@ -92,9 +95,9 @@ saveBtn.addEventListener("click", (e) => {
       const details = JSON.parse(localStorage.getItem("details")) || [];
       details.push(persons);
       localStorage.setItem("details", JSON.stringify(details));
+      birthdayMember.innerHTML = "";
+      pushNotification();
     }
-  } else {
-    e.preventDefault();
   }
 });
 
@@ -300,35 +303,39 @@ function getLocalStorage() {
     });
   }
 }
-
-const allItems = document.querySelectorAll(".item");
-if (allItems) {
-  allItems.forEach((item, index) => {
-    item.addEventListener("click", () => {
-      const info = JSON.parse(localStorage.getItem("personInfo"));
-      if (info) {
-        localStorage.removeItem("personInfo");
-      }
-      const img = document.querySelectorAll(".user-img")[index].src;
-      const name = document.querySelectorAll(".member-name")[index].innerText;
-      const date = document.querySelectorAll(".birthday")[index].dataset.date;
-      const month = document.querySelectorAll(".birthday")[index].dataset.month;
-      const year = document.querySelectorAll(".birthday")[index].dataset.year;
-      const category =
-        document.querySelectorAll(".birthday")[index].dataset.category;
-      const personInfo = {
-        name: name,
-        img: img,
-        d: +date,
-        m: +month,
-        y: +year,
-        category: category,
-        itemNo: index,
-      };
-      localStorage.setItem("personInfo", JSON.stringify(personInfo));
+totalMembers();
+function totalMembers() {
+  const allItems = document.querySelectorAll(".item");
+  if (allItems) {
+    allItems.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        const info = JSON.parse(localStorage.getItem("personInfo"));
+        if (info) {
+          localStorage.removeItem("personInfo");
+        }
+        const img = document.querySelectorAll(".user-img")[index].src;
+        const name = document.querySelectorAll(".member-name")[index].innerText;
+        const date = document.querySelectorAll(".birthday")[index].dataset.date;
+        const month =
+          document.querySelectorAll(".birthday")[index].dataset.month;
+        const year = document.querySelectorAll(".birthday")[index].dataset.year;
+        const category =
+          document.querySelectorAll(".birthday")[index].dataset.category;
+        const personInfo = {
+          name: name,
+          img: img,
+          d: +date,
+          m: +month,
+          y: +year,
+          category: category,
+          itemNo: index,
+        };
+        localStorage.setItem("personInfo", JSON.stringify(personInfo));
+      });
     });
-  });
+  }
 }
+
 theme();
 function theme() {
   const selectedTheme = JSON.parse(localStorage.getItem("theme"));
@@ -336,7 +343,6 @@ function theme() {
 }
 
 function pushNotification() {
-  const birthdayMember = document.querySelector(".todays-brithday-members");
   const details = JSON.parse(localStorage.getItem("details"));
   let currentDate = new Date().getDate();
   let currentMonth = new Date().getMonth() + 1;
@@ -361,7 +367,6 @@ function pushNotification() {
       birthdayMember.appendChild(innerDiv);
       birthMonth < 10 ? (birthMonth = +`0${birthMonth}`) : birthMonth;
       birthDate < 10 ? (birthDate = +`0${birthDate}`) : birthDate;
-
       showNotification(name, img, birthDate, birthMonth, birthYear);
     }
   }

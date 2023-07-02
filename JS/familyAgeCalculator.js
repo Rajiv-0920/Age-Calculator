@@ -276,6 +276,7 @@ function getUserSelectedImg() {
 }
 
 function updateData(e) {
+  e.preventDefault();
   const tempInfo = JSON.parse(localStorage.getItem("personInfo"));
   imgValue = imgValue !== undefined ? imgValue : tempInfo.img;
   const updateCurrentInfo = {
@@ -291,7 +292,6 @@ function updateData(e) {
   const checkCurrentDate = new Date().getTime();
 
   if (checkCurrentDate < checkDateOfBirth) {
-    e.preventDefault();
     showError("Birth date cannot be greater than today's ");
   } else {
     memberDetails.classList.toggle("show");
@@ -334,7 +334,10 @@ function updateData(e) {
       checkedOptions === "anniversary" ? "Anniversary" : "Date of Birth";
 
     localStorage.setItem("personInfo", JSON.stringify(updateCurrentInfo));
-
+    setTimeout(() => {
+      memberImg.classList.toggle("show");
+      cameraImgBtn.classList.toggle("hide");
+    }, 500);
     // Updating Outer Container
 
     const details = JSON.parse(localStorage.getItem("details"));
@@ -364,6 +367,13 @@ function updateData(e) {
       }
       return person;
     });
+    personName.innerText = updateCurrentInfo.name;
+    img.src = updateDetails.img;
+    calculateAge(
+      +updateCurrentInfo.d,
+      +updateCurrentInfo.m,
+      +updateCurrentInfo.y
+    );
     localStorage.setItem("details", JSON.stringify(infoUpdated));
   }
 }
