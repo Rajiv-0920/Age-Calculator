@@ -237,74 +237,48 @@ function nextYearBirthDate(memberBirth) {
   let userBirthMonth = +memberBirth[1];
   let userBirthYear = +memberBirth[0];
 
-  let month = 0;
-  let date = 0;
-  let year = 0;
+  let date = currentDate - userBirthDate;
   let carry = 0;
   let carryMonths = 0;
 
-  if (currentDate < userBirthDate) {
+  if (date < 0) {
     carry = 1;
-    date =
-      currentDate +
-      getDaysInMonth(currentMonth - 1, currentYear) -
-      userBirthDate;
-  } else {
-    date = currentDate - userBirthDate;
+    date += getDaysInMonth(currentMonth, currentYear);
+  }
+  let month = currentMonth - userBirthMonth - carry;
+
+  if (month < 0) {
+    carryMonths = 1;
+    month += 12;
   }
 
-  if (currentDate === userBirthDate) {
-    if (currentMonth > userBirthMonth) {
-      month = currentMonth - userBirthMonth - carry;
-    } else if (currentMonth < userBirthMonth) {
-      carryMonths = 12;
-      month = currentMonth + carryMonths - userBirthMonth - carry;
-    }
-  } else if (
-    currentDate < userBirthDate ||
-    (currentDate > userBirthDate && currentMonth <= userBirthMonth)
-  ) {
-    if (!(currentDate > userBirthDate && currentMonth === userBirthMonth)) {
-      carryMonths = 12;
-    } else {
-      carryMonths = 0;
-    }
-    month = currentMonth + carryMonths - userBirthMonth - carry;
-  }
-  if (carryMonths === 12) {
-    year = currentYear - userBirthYear - 1;
-  } else {
-    year = currentYear - userBirthYear;
-  }
-
-  // Calculation of Next Birthday
+  let year = currentYear - userBirthYear - carryMonths;
 
   year < 10 ? (year = +`0${year}`) : year;
   month < 10 ? (month = +`0${month}`) : month;
   date < 10 ? (date = +`0${date}`) : date;
 
-  let leftMonth;
-  let leftDay;
-  let borrow;
-  if (date > 0) {
-    borrow = 1;
-    leftDay = getDaysInMonth(currentMonth - 1, currentYear) - +date;
-  } else {
-    borrow = 0;
-    leftDay = 0;
-  }
+  // Calculation of Next Birthday
+  let nBirthMonth = userBirthMonth;
+  let nBirthDate = userBirthDate;
+  let nDate = nBirthDate - currentDate;
 
-  if (borrow === 1) {
-    leftMonth = 12 - +month - borrow;
-  } else if (month !== 0) {
-    leftMonth = 12 - +month - borrow;
-  } else {
-    leftMonth = 0;
+  carry = 0;
+  if (nDate < 0) {
+    carry = 1;
+    nDate += getDaysInMonth(currentMonth, currentYear);
   }
-  leftMonth < 10 ? (leftMonth = `0${leftMonth}`) : leftMonth;
-  leftDay < 10 ? (leftDay = `0${leftDay}`) : leftDay;
+  let nMonth = nBirthMonth - carry - currentMonth;
+  carryMonths = 0;
 
-  let nextBirth = [leftDay, leftMonth];
+  if (nMonth < 0) {
+    carryMonths = 12;
+    nMonth += carryMonths;
+  }
+  nDate < 10 ? (nDate = `0${nDate}`) : nDate;
+  nMonth < 10 ? (nMonth = `0${nMonth}`) : nMonth;
+
+  let nextBirth = [nDate, nMonth];
 
   return nextBirth;
 }

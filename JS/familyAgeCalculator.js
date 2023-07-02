@@ -132,111 +132,70 @@ function calculateAge(userBirthDate, userBirthMonth, userBirthYear) {
   const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
 
-  let month = 0;
-  let date = 0;
-  let year = 0;
+  let date = currentDate - userBirthDate;
   let carry = 0;
   let carryMonths = 0;
-  console.log(userBirthDate, userBirthMonth, userBirthYear);
-  if (currentDate < userBirthDate) {
+
+  if (date < 0) {
     carry = 1;
-    date =
-      currentDate +
-      getDaysInMonth(currentMonth - 1, currentYear) -
-      userBirthDate;
-  } else {
-    date = currentDate - userBirthDate;
+    date += getDaysInMonth(currentMonth, currentYear);
+  }
+  let month = currentMonth - userBirthMonth - carry;
+
+  if (month < 0) {
+    carryMonths = 1;
+    month += 12;
   }
 
-  if (currentDate === userBirthDate) {
-    if (currentMonth > userBirthMonth) {
-      month = currentMonth - userBirthMonth - carry;
-    } else if (currentMonth < userBirthMonth) {
-      carryMonths = 12;
-      month = currentMonth + carryMonths - userBirthMonth - carry;
+  let year = currentYear - userBirthYear - carryMonths;
+  if (year < 0) {
+    showError("Birth date cannot be greater than today's ");
+    clearAll();
+  } else {
+    date < 10 ? (date = `0${date}`) : date;
+    month < 10 ? (month = `0${month}`) : month;
+    year < 10 ? (year = `0${year}`) : year;
+
+    calculatedDate.textContent = date;
+    calculatedMonth.textContent = month;
+    calculatedYear.textContent = year;
+
+    // Calculation of Next Birthday
+    let nBirthMonth = userBirthMonth;
+    let nBirthDate = userBirthDate;
+    let nDate = nBirthDate - currentDate;
+
+    carry = 0;
+    if (nDate < 0) {
+      carry = 1;
+      nDate += getDaysInMonth(currentMonth, currentYear);
     }
-  } else if (
-    currentDate < userBirthDate ||
-    (currentDate > userBirthDate && currentMonth <= userBirthMonth)
-  ) {
-    if (!(currentDate > userBirthDate && currentMonth === userBirthMonth)) {
+
+    let nMonth = nBirthMonth - carry - currentMonth;
+    carryMonths = 0;
+    if (nMonth < 0) {
       carryMonths = 12;
-    } else {
-      carryMonths = 0;
+      nMonth += carryMonths;
     }
-    month = currentMonth + carryMonths - userBirthMonth - carry;
+    nDate < 10 ? (nDate = `0${nDate}`) : nDate;
+    nMonth < 10 ? (nMonth = `0${nMonth}`) : nMonth;
+    monthsLeft.textContent = nMonth;
+    daysLeft.textContent = nDate;
+
+    totalYears.textContent = year;
+    // + sign use for for convert string to number like. +year or +month
+    let totalMonth = +year * 12 + +month;
+    totalMonths.textContent = totalMonth;
+    let totalWeek = totalMonth * 4.345 + +date / 4.345;
+    totalWeeks.textContent = Math.round(totalWeek);
+    let totalDay = Math.round(totalMonth * 30.417);
+    totalDays.textContent = totalDay;
+    totalHours.textContent = totalDay * 24;
+    totalMinutes.textContent = totalDay * 24 * 60;
+    totalSeconds.textContent = totalDay * 24 * 60 * 60;
+    extrasData.classList.remove("hide");
+    upcomingDates(userBirthDate, userBirthMonth, currentYear);
   }
-
-  if (carryMonths === 12) {
-    year = currentYear - userBirthYear - 1;
-  } else {
-    year = currentYear - userBirthYear;
-  }
-
-  if (userBirthDate === undefined || userBirthMonth === undefined) {
-    year = "0";
-    month = "0";
-    date = "0";
-  }
-
-  year < 10 ? (year = `0${year}`) : year;
-  month < 10 ? (month = `0${month}`) : month;
-  date < 10 ? (date = `0${date}`) : date;
-
-  calculatedYear.textContent = year;
-  calculatedMonth.textContent = month;
-  calculatedDate.textContent = date;
-
-  // Calculation of Next Birthday
-  nextBirthday(+date, +month, currentMonth, currentYear);
-
-  totalYears.textContent = year;
-  // + sign use for for convert string to number like. +year or +month
-  let totalMonth = +year * 12 + +month;
-  totalMonths.textContent = totalMonth;
-  let totalWeek = totalMonth * 4.345 + +date / 4.345;
-  totalWeeks.textContent = Math.round(totalWeek);
-  let totalDay = Math.round(totalMonth * 30.417);
-  totalDays.textContent = totalDay;
-  totalHours.textContent = totalDay * 24;
-  totalMinutes.textContent = totalDay * 24 * 60;
-  totalSeconds.textContent = totalDay * 24 * 60 * 60;
-  extrasData.classList.remove("hide");
-  upcomingDates(userBirthDate, userBirthMonth, currentYear);
-}
-
-function nextBirthday(date, month, currentMonth, currentYear) {
-  year < 10 ? (year = +`0${year}`) : year;
-  month < 10 ? (month = +`0${month}`) : month;
-  date < 10 ? (date = +`0${date}`) : date;
-
-  let leftMonth;
-  let leftDay;
-  let borrow;
-  if (date > 0) {
-    borrow = 1;
-    leftDay = getDaysInMonth(currentMonth - 1, currentYear) - +date;
-  } else {
-    borrow = 0;
-    leftDay = `00`;
-    leftMonth = `00`;
-  }
-
-  if (borrow === 1) {
-    leftMonth = 12 - +month - borrow;
-  } else if (month !== 0) {
-    leftMonth = 12 - +month - borrow;
-  } else {
-    leftMonth = `00`;
-  }
-  if (leftMonth < 10 && leftMonth > 0) {
-    leftMonth = `0${leftMonth}`;
-  }
-  if (leftDay < 10 && leftDay > 0) {
-    leftDay = `0${leftDay}`;
-  }
-  monthsLeft.textContent = leftMonth;
-  daysLeft.textContent = leftDay;
 }
 
 var getDaysInMonth = function (month, year) {
@@ -382,6 +341,12 @@ function updateData(e) {
     let updateDetails = details[updateCurrentInfo.itemNo];
     const infoUpdated = details.filter((person, index) => {
       if (index === updateCurrentInfo.itemNo) {
+        updateCurrentInfo.m < 10
+          ? (updateCurrentInfo.m = `0${updateCurrentInfo.m}`)
+          : updateCurrentInfo.m;
+        updateCurrentInfo.d < 10
+          ? (updateCurrentInfo.d = `0${updateCurrentInfo.d}`)
+          : updateCurrentInfo.d;
         updateDetails.name = updateCurrentInfo.name;
         updateDetails.img = updateCurrentInfo.img;
         updateDetails.category = updateCurrentInfo.category;

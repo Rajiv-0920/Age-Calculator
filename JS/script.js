@@ -213,7 +213,6 @@ function calculateAge() {
     carryMonth = 0;
     if (date > getDaysInMonth(nMonth - 1, year)) {
       carryMonth = 1;
-      // date -= getDaysInMonth(nMonth - 1, year);
     }
     month = +cMonth + +nMonth + carryMonth;
 
