@@ -137,7 +137,7 @@ function calculateAge(userBirthDate, userBirthMonth, userBirthYear) {
   let year = 0;
   let carry = 0;
   let carryMonths = 0;
-
+  console.log(userBirthDate, userBirthMonth, userBirthYear);
   if (currentDate < userBirthDate) {
     carry = 1;
     date =
@@ -148,14 +148,21 @@ function calculateAge(userBirthDate, userBirthMonth, userBirthYear) {
     date = currentDate - userBirthDate;
   }
 
-  if (currentDate === userBirthDate || currentMonth > userBirthMonth) {
-    month = currentMonth - userBirthMonth - carry;
+  if (currentDate === userBirthDate) {
+    if (currentMonth > userBirthMonth) {
+      month = currentMonth - userBirthMonth - carry;
+    } else if (currentMonth < userBirthMonth) {
+      carryMonths = 12;
+      month = currentMonth + carryMonths - userBirthMonth - carry;
+    }
   } else if (
     currentDate < userBirthDate ||
     (currentDate > userBirthDate && currentMonth <= userBirthMonth)
   ) {
     if (!(currentDate > userBirthDate && currentMonth === userBirthMonth)) {
       carryMonths = 12;
+    } else {
+      carryMonths = 0;
     }
     month = currentMonth + carryMonths - userBirthMonth - carry;
   }

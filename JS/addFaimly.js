@@ -253,8 +253,13 @@ function nextYearBirthDate(memberBirth) {
     date = currentDate - userBirthDate;
   }
 
-  if (currentDate === userBirthDate || currentMonth > userBirthMonth) {
-    month = currentMonth - userBirthMonth - carry;
+  if (currentDate === userBirthDate) {
+    if (currentMonth > userBirthMonth) {
+      month = currentMonth - userBirthMonth - carry;
+    } else if (currentMonth < userBirthMonth) {
+      carryMonths = 12;
+      month = currentMonth + carryMonths - userBirthMonth - carry;
+    }
   } else if (
     currentDate < userBirthDate ||
     (currentDate > userBirthDate && currentMonth <= userBirthMonth)
@@ -286,8 +291,7 @@ function nextYearBirthDate(memberBirth) {
     leftDay = getDaysInMonth(currentMonth - 1, currentYear) - +date;
   } else {
     borrow = 0;
-    leftDay = `00`;
-    leftMonth = `00`;
+    leftDay = 0;
   }
 
   if (borrow === 1) {
@@ -295,14 +299,11 @@ function nextYearBirthDate(memberBirth) {
   } else if (month !== 0) {
     leftMonth = 12 - +month - borrow;
   } else {
-    leftMonth = `00`;
+    leftMonth = 0;
   }
-  if (leftMonth < 10 && leftMonth > 0) {
-    leftMonth = `0${leftMonth}`;
-  }
-  if (leftDay < 10 && leftDay > 0) {
-    leftDay = `0${leftDay}`;
-  }
+  leftMonth < 10 ? (leftMonth = `0${leftMonth}`) : leftMonth;
+  leftDay < 10 ? (leftDay = `0${leftDay}`) : leftDay;
+
   let nextBirth = [leftDay, leftMonth];
 
   return nextBirth;
